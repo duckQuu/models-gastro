@@ -1,63 +1,79 @@
-# EfficientNet-based Image Classification for Gastrointestinal Disease Detection
+# Gastrointestinal Disease Detection using Deep Learning
 
-This repository contains code for training an image classification model using the EfficientNet architecture to classify gastrointestinal images. The model is fine-tuned with data augmentation and uses advanced layers for enhanced accuracy and robustness.
+This repository contains code and models for detecting and classifying gastrointestinal diseases from endoscopic images. Developed as part of a research project, this work leverages deep learning models to achieve high accuracy in identifying various types of gastrointestinal issues.
 
 ## Project Overview
 
-The main steps in this project include:
-1. **Data Augmentation**: Using Augmentor to generate diverse samples.
-2. **Image Preprocessing**: Loading, resizing, and normalizing images.
-3. **Model Architecture**: A deep learning model built on EfficientNet with added convolutional, batch normalization, and noise layers.
-4. **Evaluation**: Using various metrics to assess model performance.
+This project aims to build a robust image classification system for detecting gastrointestinal diseases using multiple deep learning architectures. The project includes:
+1. **Data Preprocessing**: Loading, resizing, and normalizing images for deep learning.
+2. **Data Augmentation**: Using Augmentor to generate additional samples and improve model robustness.
+3. **Model Training**: Fine-tuning pre-trained models like EfficientNet, Xception, and VGG19.
+4. **Evaluation and Visualization**: Assessing models with performance metrics and visualizing results.
 
-## Steps in Detail
+## Key Steps and Components
 
-### 1. Data Augmentation
+### 1. Data Preparation and Augmentation
 
-Data augmentation techniques such as rotation, flipping, and zooming are applied using Augmentor to enhance dataset diversity:
-- Rotation with a probability of 0.8
-- Zooming with a probability of 0.2
-- Flipping horizontally and vertically
-- Random distortion
+The dataset consists of endoscopic images from the Kvasir dataset. To improve model generalization, we apply data augmentation techniques:
+- **Rotation**, **Zooming**, **Flipping**, and **Random Distortion** to create more diverse training data.
 
-Augmented samples are generated for robust training on 18,000 images.
+Augmentation is done using the [Augmentor](https://augmentor.readthedocs.io/en/master/) library, producing 18,000 images for training.
 
-### 2. Image Preprocessing
+### 2. Model Architectures
 
-- **Image Loading**: The `get_images` function loads and resizes images from a specified directory, handling errors and unreadable files.
-- **Label Encoding**: Labels are encoded for compatibility with the model.
-- **Train-Test Split**: The dataset is split into training and testing sets with stratification.
+The project explores and fine-tunes multiple deep learning architectures for image classification:
+- **EfficientNet**: Known for balancing accuracy and efficiency, it serves as a primary model.
+- **Xception** and **VGG19**: Used for comparison, providing alternative architectures to improve results and benchmark performance.
 
-### 3. Model Architecture
+Additional layers are added to these base models:
+- **Convolutional Layers** for feature extraction.
+- **Batch Normalization** and **Gaussian Noise** for regularization.
+- **Global Average Pooling** and fully connected layers to enhance accuracy and reduce overfitting.
 
-The model is based on EfficientNetB1, a pre-trained CNN architecture known for its efficiency and accuracy. Additional layers are added to the base model:
-- Convolutional layers with ReLU activation
-- Batch normalization and Gaussian noise layers for regularization
-- Global average pooling and fully connected layers
-- Dropout layers to prevent overfitting
-- Final softmax layer for multi-class classification
+### 3. Model Training and Evaluation
 
-The model is compiled with:
-- **Optimizer**: Adam with a learning rate of 0.0001
-- **Loss Function**: Categorical cross-entropy
-- **Metrics**: Accuracy, Precision, Recall, and AUC
+The models are trained on the augmented dataset and evaluated using various metrics:
+- **Accuracy**
+- **Precision** and **Recall**
+- **AUC (Area Under the Curve)**
+- **Confusion Matrix** and **Classification Report** for class-wise performance insights.
 
-### 4. Model Evaluation
+The training includes early stopping and learning rate reduction to prevent overfitting and optimize performance.
 
-The model is evaluated using:
-- **Confusion Matrix**: Provides insights into classification accuracy for each class.
-- **Balanced Accuracy Score (BAS)** and **Matthews Correlation Coefficient (MCC)**: Metrics for balanced performance assessment.
-- **F1 Score**: Measures model robustness, with a custom weighted F1 score for imbalanced datasets.
+### 4. Visualization and Analysis
 
-## How to Run
+The project includes code for visualizing:
+- **Training History**: Accuracy and loss curves for each model.
+- **Confusion Matrix**: Helps understand model performance across different classes.
 
-1. **Dependencies**: Install necessary libraries with:
-   ```bash
-   pip install tensorflow pandas numpy matplotlib seaborn Augmentor
-   ```
-2. **Data Preparation**: Place the dataset in the specified directory.
-3. **Run the Code**: Execute the script to train and evaluate the model.
+## Getting Started
 
-## Example Output
+### Prerequisites
 
-The script will display model architecture, training progress, evaluation metrics, and a confusion matrix for visual inspection of model performance.
+Install the necessary packages using:
+```bash
+pip install tensorflow pandas numpy matplotlib seaborn Augmentor
+```
+
+### Running the Code
+
+1. **Data Preparation**: Place the dataset in the specified directory (e.g., `/kaggle/input/kvasir/kvasir-dataset-v2/`).
+2. **Data Augmentation**: Run the augmentation section to create a larger training dataset.
+3. **Model Training**: Run the notebook sections to train each model.
+4. **Evaluation**: Use the provided metrics and visualizations to evaluate model performance.
+
+### Example Results
+
+After training, each model will output metrics such as accuracy, precision, recall, and AUC, along with confusion matrix plots and classification reports to evaluate model effectiveness.
+
+## Repository Structure
+
+- `Kelompok_14_models_final.ipynb`: Main Jupyter notebook with all code for preprocessing, augmentation, training, and evaluation.
+- `images/`: Folder to store sample images and visualizations for documentation.
+
+## Future Improvements
+
+- **Hyperparameter Tuning**: Optimize parameters for further accuracy improvements.
+- **Additional Augmentation**: Experiment with other augmentation techniques to improve model robustness.
+- **Deployment**: Integrate the trained model into a web or mobile application for real-world use.
+
